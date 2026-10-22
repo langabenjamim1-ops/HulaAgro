@@ -1,0 +1,273 @@
+════════════════════════════════════════════════════════════════════════════════
+
+                    HULA AGRO - SCHEMA SQL EXECUTION CHECKLIST
+
+════════════════════════════════════════════════════════════════════════════════
+
+PRE-EXECUTION CHECKLIST
+
+Before executing the SQL schema in Supabase, verify:
+
+  [ ] Supabase project is created and active
+  [ ] You have admin access to the SQL Editor
+  [ ] Backup taken (if existing data needs to be preserved)
+  [ ] Project is in development/staging (not production)
+  [ ] Network connection is stable
+  [ ] You have the SQL file ready: supabase/migrations/00_hula_agro_complete_schema.sql
+
+════════════════════════════════════════════════════════════════════════════════
+
+EXECUTION STEPS
+
+Step 1: Navigate to Supabase
+  [ ] Go to https://app.supabase.com
+  [ ] Select your HULA AGRO project
+  [ ] Click "SQL Editor" in the left sidebar
+
+Step 2: Create New Query
+  [ ] Click "New Query" button
+  [ ] Or click on "New" → "SQL Query"
+  [ ] A blank SQL editor window appears
+
+Step 3: Copy SQL Content
+  [ ] Open file: supabase/migrations/00_hula_agro_complete_schema.sql
+  [ ] Copy all content (Ctrl+A, Ctrl+C)
+  [ ] Paste into Supabase editor (Ctrl+V)
+
+Step 4: Verify SQL
+  [ ] Scroll through to verify content is complete
+  [ ] Check for any syntax highlighting issues (red squiggly lines)
+  [ ] Confirm all 474 lines are present
+
+Step 5: Execute
+  [ ] Click the blue "RUN" button (top right)
+  [ ] Or press Ctrl+Enter
+  [ ] Wait for execution to complete (2-5 minutes)
+
+Step 6: Monitor Progress
+  [ ] Watch status messages at the bottom
+  [ ] Look for green checkmarks (success)
+  [ ] Watch for red errors (if any)
+  [ ] Execution should show: "Query executed successfully"
+
+════════════════════════════════════════════════════════════════════════════════
+
+VERIFICATION STEPS (After Execution)
+
+After successful execution, verify:
+
+Step 1: List All Tables
+  [ ] Click "New Query"
+  [ ] Paste this SQL:
+  
+      SELECT table_name 
+      FROM information_schema.tables 
+      WHERE table_schema = 'public' 
+      ORDER BY table_name;
+  
+  [ ] Execute
+  [ ] Verify 21 tables are listed:
+      1. alerts
+      2. batches
+      3. contracts
+      4. cost_records
+      5. decision_history
+      6. deviations
+      7. diseases
+      8. employee_records
+      9. environmental_monitoring
+      10. farms
+      11. genetics
+      12. health_records
+      13. medication_shortage
+      14. medications
+      15. payroll
+      16. production_records
+      17. profiles
+      18. purchases
+      19. suggestions
+      20. tenants
+      21. vacation
+
+Step 2: Count Tables
+  [ ] Click "New Query"
+  [ ] Paste:
+  
+      SELECT COUNT(*) as total_tables
+      FROM information_schema.tables 
+      WHERE table_schema = 'public';
+  
+  [ ] Execute
+  [ ] Verify result is 21
+
+Step 3: Check RLS Policies
+  [ ] Click "New Query"
+  [ ] Paste:
+  
+      SELECT schemaname, tablename, policyname 
+      FROM pg_policies 
+      WHERE schemaname = 'public' 
+      ORDER BY tablename;
+  
+  [ ] Execute
+  [ ] Verify policies for each table exist
+
+Step 4: Check Indexes
+  [ ] Click "New Query"
+  [ ] Paste:
+  
+      SELECT indexname 
+      FROM pg_indexes 
+      WHERE schemaname = 'public' 
+      AND indexname LIKE 'idx_%'
+      ORDER BY indexname;
+  
+  [ ] Execute
+  [ ] Verify 11 indexes are listed
+
+════════════════════════════════════════════════════════════════════════════════
+
+TROUBLESHOOTING
+
+If you encounter errors:
+
+Error: "relation already exists"
+  → Cause: Tables already exist in database
+  → Solution: Drop all tables first or use a clean project
+  → SQL to drop all:
+      DROP SCHEMA IF EXISTS public CASCADE;
+      CREATE SCHEMA public;
+
+Error: "permission denied for schema public"
+  → Cause: User doesn't have admin role
+  → Solution: Contact project admin or switch to admin account
+
+Error: "syntax error"
+  → Cause: SQL syntax issue (rare)
+  → Solution:
+      1. Check file wasn't corrupted
+      2. Re-copy from: supabase/migrations/00_hula_agro_complete_schema.sql
+      3. Try again
+
+Error: "timeout"
+  → Cause: Query takes too long
+  → Solution:
+      1. Split the SQL into smaller parts
+      2. Execute tables first, then indexes, then RLS
+      3. Try again with better network
+
+Query seems stuck (spinning forever)
+  → Cause: Long-running operation
+  → Solution:
+      1. Wait another 2-3 minutes
+      2. If still stuck, click "Stop" button
+      3. Refresh page and check if tables were created anyway
+
+════════════════════════════════════════════════════════════════════════════════
+
+POST-EXECUTION STEPS
+
+After successful verification:
+
+  [ ] Delete test queries (to keep SQL Editor clean)
+  [ ] Take a backup in Supabase Console
+  [ ] Document the execution date/time
+  [ ] Notify team members of schema readiness
+  [ ] Update application environment variables if needed
+  [ ] Run database connection test from app
+  [ ] Execute first test data inserts through application
+
+════════════════════════════════════════════════════════════════════════════════
+
+WHAT GETS CREATED
+
+Tables:        21 (all empty, no demo data)
+Indexes:       11 (for query performance)
+Policies:      21 (one per table, RLS isolation)
+Extensions:    2 (pgcrypto, uuid-ossp)
+
+Total SQL Lines: 474
+Expected Time:   2-5 minutes
+Database Size:   ~5-10 MB (empty)
+
+════════════════════════════════════════════════════════════════════════════════
+
+SUCCESS INDICATORS
+
+You'll know execution succeeded when:
+
+  ✅ All SQL executed without errors
+  ✅ Green checkmark appears at bottom of editor
+  ✅ "Query executed successfully" message shown
+  ✅ Database can be queried from Supabase console
+  ✅ All 21 tables visible in Table Editor
+  ✅ RLS policies appear in settings
+  ✅ Application can connect and create records
+  ✅ No data loss in existing data (if migrating)
+
+════════════════════════════════════════════════════════════════════════════════
+
+NEXT STEPS
+
+After schema is successfully created:
+
+1. ✅ Connect application to Supabase
+2. ✅ Test database operations through app
+3. ✅ Create first test farm/batch/records
+4. ✅ Verify RLS isolation works
+5. ✅ Set up monitoring and backups
+6. ✅ Train team on data entry procedures
+7. ✅ Plan data migration from legacy systems
+8. ✅ Document standard workflows
+
+════════════════════════════════════════════════════════════════════════════════
+
+DOCUMENTATION FILES
+
+After execution, reference these files:
+
+  SQL_SCHEMA_SUMMARY.md        - Complete schema documentation
+  EXECUTE_SQL_SCHEMA.md        - Step-by-step execution guide
+  SCHEMA_EXECUTION_CHECKLIST   - This file
+
+════════════════════════════════════════════════════════════════════════════════
+
+SUPPORT & HELP
+
+If you need help:
+
+1. Check troubleshooting section above
+2. Review SQL_SCHEMA_SUMMARY.md for table details
+3. Check Supabase documentation: supabase.com/docs
+4. Verify syntax at: sqlformat.darenet.com
+5. Contact technical support with error message
+
+════════════════════════════════════════════════════════════════════════════════
+
+CHECKSUM / VALIDATION
+
+Schema File: supabase/migrations/00_hula_agro_complete_schema.sql
+Total Lines: 474
+Expected Tables: 21
+Expected Policies: 21
+Expected Indexes: 11
+Database: PostgreSQL 13+ / Supabase
+
+════════════════════════════════════════════════════════════════════════════════
+
+Ready to Execute: YES ✅
+
+All documentation prepared.
+Schema validated.
+SQL syntax verified.
+Ready for production deployment.
+
+Begin execution whenever ready.
+
+════════════════════════════════════════════════════════════════════════════════
+
+Date: January 26, 2026
+Status: READY FOR EXECUTION
+Version: 1.0
+
+════════════════════════════════════════════════════════════════════════════════

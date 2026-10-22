@@ -1,0 +1,77 @@
+════════════════════════════════════════════════════════════════════════════════
+
+                    QUICK FIX: Database Error
+
+════════════════════════════════════════════════════════════════════════════════
+
+ERROR YOU'RE SEEING:
+
+  Failed to load schema
+  Database query failed: (ENOTFOUND) tenant/user
+  postgres://jkx*?z...njgdqbug
+  not found
+
+════════════════════════════════════════════════════════════════════════════════
+
+WHAT IT MEANS:
+
+The SQL schema was NOT executed in Supabase. The tables don't exist yet.
+
+════════════════════════════════════════════════════════════════════════════════
+
+FIX IN 4 STEPS (5 MINUTES):
+
+Step 1: Copy SQL File
+  → Open: supabase/migrations/00_hula_agro_complete_schema.sql
+  → Select all (Ctrl+A)
+  → Copy (Ctrl+C)
+
+Step 2: Go to Supabase
+  → https://app.supabase.com
+  → Select your project
+  → Click "SQL Editor" (left sidebar)
+
+Step 3: Execute SQL
+  → Click "New Query" button
+  → Paste (Ctrl+V) the entire SQL file
+  → Click "RUN" button
+  → Wait for green checkmark (2-5 minutes)
+
+Step 4: Verify Success
+  → In Supabase SQL Editor, run:
+  
+      SELECT COUNT(*) as total_tables
+      FROM information_schema.tables 
+      WHERE table_schema = 'public';
+  
+  → Should show: 21 tables
+  → If yes, go back to app and refresh (Ctrl+Shift+R)
+  → Error should be gone ✓
+
+════════════════════════════════════════════════════════════════════════════════
+
+THAT'S IT!
+
+If error still appears after refresh:
+  1. Make sure you pasted ALL the SQL (entire file)
+  2. Make sure you clicked RUN
+  3. Make sure you waited for green checkmark
+  4. Try hard refresh: Ctrl+Shift+R (not just Ctrl+R)
+
+════════════════════════════════════════════════════════════════════════════════
+
+SQL FILE LOCATION:
+
+  /supabase/migrations/00_hula_agro_complete_schema.sql
+
+Total: 474 lines
+Contains: 21 tables, 11 indexes, 21 security policies
+
+════════════════════════════════════════════════════════════════════════════════
+
+MORE HELP:
+
+  See: FIX_DATABASE_ERROR.md (detailed troubleshooting)
+  See: SCHEMA_EXECUTION_CHECKLIST.txt (step-by-step guide)
+
+════════════════════════════════════════════════════════════════════════════════
