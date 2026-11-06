@@ -49,33 +49,33 @@ export default function WialonMapPanel({ endpoint = '/api/wialon/units' }: { end
   )
 
   return (
-    <section className="overflow-hidden rounded-2xl border border-[#C7C2AB] bg-white shadow-sm">
-      <div className="flex flex-col gap-3 border-b border-[#E3E0D5] px-4 py-3 md:flex-row md:items-center md:justify-between">
+    <section className="overflow-hidden rounded-2xl border border-[#C9D4D1] bg-white shadow-sm">
+      <div className="flex flex-col gap-3 border-b border-[#E2E8E6] px-4 py-3 md:flex-row md:items-center md:justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <MapPin className="h-4 w-4 text-[#777E5C]" />
-            <h3 className="font-montserrat text-sm font-bold text-[#283106]">
+            <MapPin className="h-4 w-4 text-[#7D8B89]" />
+            <h3 className="font-montserrat text-sm font-bold text-[#515062]">
               Monitorização Wialon
             </h3>
           </div>
-          <p className="mt-1 text-[11px] text-[#777E5C]">
+          <p className="mt-1 text-[11px] text-[#7D8B89]">
             Dispositivos, localização e sensores em tempo real
           </p>
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 rounded-full bg-[#F5F4F1] px-2.5 py-1 text-[10px] font-semibold text-[#53602E]">
+          <div className="flex items-center gap-1.5 rounded-full bg-[#F9F9F9] px-2.5 py-1 text-[10px] font-semibold text-[#2FB394]">
             <Wifi className="h-3.5 w-3.5" />
             {online}/{units.length} online
           </div>
-          <div className="flex items-center gap-1.5 rounded-full bg-[#F5F4F1] px-2.5 py-1 text-[10px] font-semibold text-[#53602E]">
+          <div className="flex items-center gap-1.5 rounded-full bg-[#F9F9F9] px-2.5 py-1 text-[10px] font-semibold text-[#2FB394]">
             <Activity className="h-3.5 w-3.5" />
             {sensorCount} sensores
           </div>
           <button
             onClick={() => void loadUnits(true)}
             disabled={loading}
-            className="rounded-lg border border-[#D8D5C8] p-2 text-[#53602E] transition hover:bg-[#F5F4F1] disabled:opacity-50"
+            className="rounded-lg border border-[#E2E8E6] p-2 text-[#2FB394] transition hover:bg-[#F9F9F9] disabled:opacity-50"
             title="Atualizar Wialon"
           >
             <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
@@ -87,9 +87,9 @@ export default function WialonMapPanel({ endpoint = '/api/wialon/units' }: { end
         <div className="flex min-h-[380px] items-center justify-center p-6">
           <div className="max-w-lg text-center">
             <WifiOff className="mx-auto mb-3 h-8 w-8 text-red-500" />
-            <h4 className="font-semibold text-[#283106]">Wialon não conectado</h4>
-            <p className="mt-2 text-xs leading-5 text-[#777E5C]">{error}</p>
-            <p className="mt-3 rounded-lg bg-[#F5F4F1] p-3 text-left text-[11px] text-[#53602E]">
+            <h4 className="font-semibold text-[#515062]">Wialon não conectado</h4>
+            <p className="mt-2 text-xs leading-5 text-[#7D8B89]">{error}</p>
+            <p className="mt-3 rounded-lg bg-[#F9F9F9] p-3 text-left text-[11px] text-[#2FB394]">
               Configure <b>WIALON_TOKEN</b> e, se necessário, <b>WIALON_API_HOST</b> nas
               variáveis de ambiente do projeto.
             </p>
@@ -104,28 +104,28 @@ export default function WialonMapPanel({ endpoint = '/api/wialon/units' }: { end
               onSelectUnit={setSelectedUnitId}
             />
             {lastUpdate && (
-              <div className="absolute left-3 top-3 z-[500] rounded-lg bg-white/95 px-2.5 py-1.5 text-[10px] font-medium text-[#53602E] shadow">
+              <div className="absolute left-3 top-3 z-[500] rounded-lg bg-white/95 px-2.5 py-1.5 text-[10px] font-medium text-[#2FB394] shadow">
                 Atualizado {lastUpdate.toLocaleTimeString('pt-PT')}
               </div>
             )}
           </div>
 
-          <div className="max-h-[440px] overflow-y-auto border-t border-[#E3E0D5] bg-[#FCFCFA] lg:border-l lg:border-t-0">
-            <div className="border-b border-[#E3E0D5] px-4 py-3">
+          <div className="max-h-[440px] overflow-y-auto border-t border-[#E2E8E6] bg-[#F9F9F9] lg:border-l lg:border-t-0">
+            <div className="border-b border-[#E2E8E6] px-4 py-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wide text-[#283106]">
+                <span className="text-xs font-bold uppercase tracking-wide text-[#515062]">
                   Dispositivos
                 </span>
-                <span className="text-[10px] text-[#777E5C]">{units.length} unidades</span>
+                <span className="text-[10px] text-[#7D8B89]">{units.length} unidades</span>
               </div>
             </div>
 
             {units.length === 0 && !loading ? (
-              <div className="p-6 text-center text-xs text-[#777E5C]">
+              <div className="p-6 text-center text-xs text-[#7D8B89]">
                 Nenhuma unidade disponível no Wialon.
               </div>
             ) : (
-              <div className="divide-y divide-[#ECE9DF]">
+              <div className="divide-y divide-[#E2E8E6]">
                 {units.map((unit) => {
                   const selected = unit.id === selectedUnitId
                   return (
@@ -133,7 +133,7 @@ export default function WialonMapPanel({ endpoint = '/api/wialon/units' }: { end
                       key={unit.id}
                       onClick={() => setSelectedUnitId(unit.id)}
                       className={`w-full px-4 py-3 text-left transition ${
-                        selected ? 'bg-[#EFF1E8]' : 'hover:bg-[#F5F4F1]'
+                        selected ? 'bg-[#EEF2F1]' : 'hover:bg-[#F9F9F9]'
                       }`}
                     >
                       <div className="flex items-start justify-between gap-3">
@@ -144,11 +144,11 @@ export default function WialonMapPanel({ endpoint = '/api/wialon/units' }: { end
                                 unit.connected ? 'bg-lime-600' : 'bg-red-500'
                               }`}
                             />
-                            <span className="truncate text-xs font-bold text-[#283106]">
+                            <span className="truncate text-xs font-bold text-[#515062]">
                               {unit.name}
                             </span>
                           </div>
-                          <div className="mt-1 flex items-center gap-3 text-[10px] text-[#777E5C]">
+                          <div className="mt-1 flex items-center gap-3 text-[10px] text-[#7D8B89]">
                             <span className="inline-flex items-center gap-1">
                               <Gauge className="h-3 w-3" />
                               {unit.position?.speed.toFixed(0) ?? '—'} km/h
@@ -159,7 +159,7 @@ export default function WialonMapPanel({ endpoint = '/api/wialon/units' }: { end
                             </span>
                           </div>
                         </div>
-                        <span className="shrink-0 text-[10px] font-semibold text-[#777E5C]">
+                        <span className="shrink-0 text-[10px] font-semibold text-[#7D8B89]">
                           {unit.sensors.length} sens.
                         </span>
                       </div>
@@ -168,8 +168,8 @@ export default function WialonMapPanel({ endpoint = '/api/wialon/units' }: { end
                         <div className="mt-3 grid grid-cols-2 gap-1.5">
                           {unit.sensors.slice(0, 6).map((sensor) => (
                             <div key={sensor.id} className="rounded-md bg-white px-2 py-1.5">
-                              <div className="truncate text-[9px] text-[#777E5C]">{sensor.name}</div>
-                              <div className="truncate text-[10px] font-bold text-[#283106]">
+                              <div className="truncate text-[9px] text-[#7D8B89]">{sensor.name}</div>
+                              <div className="truncate text-[10px] font-bold text-[#515062]">
                                 {sensor.formattedValue ?? '—'}
                               </div>
                             </div>

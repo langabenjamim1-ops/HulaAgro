@@ -5,22 +5,22 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Paleta de gestão: fundo claro, verde água, coral e azul ardósia */
-  --background: #F7F8F7;
-  --foreground: #41414D;
+  /* Paleta Sistema de Gestão: verde #2FB394 · ardósia #515062 · coral #EC7873 · cinza #98ABA9 · fundo #F9F9F9 */
+  --background: #F9F9F9;
+  --foreground: #3F3E4D;
   --card: #FFFFFF;
-  --card-foreground: #41414D;
+  --card-foreground: #3F3E4D;
   
   /* Popover */
   --popover: #FFFFFF;
-  --popover-foreground: #41414D;
+  --popover-foreground: #3F3E4D;
   
   /* Cores primárias - Serpentine Dark Green */
-  --primary: #2EAD96;
+  --primary: #2FB394;
   --primary-foreground: #FFFFFF;
   
   /* Secundário - Ivy Green-Gray */
-  --secondary: #9AABA9;
+  --secondary: #98ABA9;
   --secondary-foreground: #FFFFFF;
   
   /* Muted - Spring Light Sage */
@@ -28,36 +28,36 @@
   --muted-foreground: #7D8B89;
   
   /* Accent - Ivy complementar */
-  --accent: #E97679;
+  --accent: #EC7873;
   --accent-foreground: #FFFFFF;
   
   /* Destructivo - Warm earth tone */
-  --destructive: #E97679;
+  --destructive: #EC7873;
   --destructive-foreground: #FFFFFF;
   
   /* Borders e inputs */
   --border: #E2E8E6;
   --input: #FFFFFF;
-  --ring: #2EAD96;
+  --ring: #2FB394;
   
   /* Charts - Earthy palette */
-  --chart-1: #2EAD96;
-  --chart-2: #E97679;
-  --chart-3: #4B4A58;
-  --chart-4: #9AABA9;
+  --chart-1: #2FB394;
+  --chart-2: #EC7873;
+  --chart-3: #515062;
+  --chart-4: #98ABA9;
   --chart-5: #C9D4D1;
   
   --radius: 0.75rem;
   
   /* Sidebar */
-  --sidebar: #41414D;
-  --sidebar-foreground: #F7F8F7;
-  --sidebar-primary: #2EAD96;
+  --sidebar: #3F3E4D;
+  --sidebar-foreground: #FFFFFF;
+  --sidebar-primary: #2FB394;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #555561;
-  --sidebar-accent-foreground: #F7F8F7;
-  --sidebar-border: #555561;
-  --sidebar-ring: #2EAD96;
+  --sidebar-accent: #5F5E73;
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: #5F5E73;
+  --sidebar-ring: #2FB394;
 }
 
 .dark {
@@ -69,20 +69,20 @@
   --popover-foreground: #F1F4F3;
   --primary: #42BCA5;
   --primary-foreground: #172B28;
-  --secondary: #9AABA9;
+  --secondary: #98ABA9;
   --secondary-foreground: #24242C;
   --muted: #3B3B45;
   --muted-foreground: #B0B9B7;
-  --accent: #E97679;
+  --accent: #EC7873;
   --accent-foreground: #FFFFFF;
-  --destructive: #E97679;
+  --destructive: #EC7873;
   --destructive-foreground: #FFFFFF;
   --border: #4A4A55;
   --input: #303039;
   --ring: #42BCA5;
   --chart-1: #42BCA5;
-  --chart-2: #E97679;
-  --chart-3: #9AABA9;
+  --chart-2: #EC7873;
+  --chart-3: #98ABA9;
   --chart-4: #747483;
   --chart-5: #D1D8D6;
   --sidebar: #24242C;
@@ -93,6 +93,27 @@
   --sidebar-accent-foreground: #F1F4F3;
   --sidebar-border: #4A4A55;
   --sidebar-ring: #42BCA5;
+}
+
+
+/* Escalas da paleta aplicadas às cores nativas do Tailwind (sem editar cada componente).
+   amber/yellow ficam como estão para manter o sinal de "aviso" distinto. */
+@theme {
+  --color-green-50:#EDFAF6; --color-green-100:#D3F3EA; --color-green-200:#A9E7D6; --color-green-300:#78D6BF;
+  --color-green-400:#4EC4A8; --color-green-500:#2FB394; --color-green-600:#259A7F; --color-green-700:#1F7C68;
+  --color-green-800:#1C6354; --color-green-900:#1A5246; --color-green-950:#0B2F28;
+  --color-emerald-50:#EDFAF6; --color-emerald-100:#D3F3EA; --color-emerald-200:#A9E7D6; --color-emerald-300:#78D6BF;
+  --color-emerald-400:#4EC4A8; --color-emerald-500:#2FB394; --color-emerald-600:#259A7F; --color-emerald-700:#1F7C68;
+  --color-emerald-800:#1C6354; --color-emerald-900:#1A5246; --color-emerald-950:#0B2F28;
+  --color-red-50:#FEF1F0; --color-red-100:#FDE1DF; --color-red-200:#FBC6C3; --color-red-300:#F7A19D;
+  --color-red-400:#F28A85; --color-red-500:#EC7873; --color-red-600:#D95F5A; --color-red-700:#B84A46;
+  --color-red-800:#963D3A; --color-red-900:#7B3634; --color-red-950:#431A19;
+  --color-gray-50:#F9F9F9; --color-gray-100:#EEF2F1; --color-gray-200:#E2E8E6; --color-gray-300:#C9D4D1;
+  --color-gray-400:#98ABA9; --color-gray-500:#7D8B89; --color-gray-600:#636275; --color-gray-700:#515062;
+  --color-gray-800:#3F3E4D; --color-gray-900:#2E2D39; --color-gray-950:#22212B;
+  --color-slate-50:#F9F9F9; --color-slate-100:#EEF2F1; --color-slate-200:#E2E8E6; --color-slate-300:#C9D4D1;
+  --color-slate-400:#98ABA9; --color-slate-500:#7D8B89; --color-slate-600:#636275; --color-slate-700:#515062;
+  --color-slate-800:#3F3E4D; --color-slate-900:#2E2D39; --color-slate-950:#22212B;
 }
 
 @theme inline {
@@ -146,12 +167,12 @@
   input:not([type='checkbox']):not([type='radio']),
   select,
   textarea {
-    @apply rounded-lg border border-[#DCE5E2] bg-white text-[#41414D] transition-colors;
+    @apply rounded-lg border border-[#DCE5E2] bg-white text-[#3F3E4D] transition-colors;
   }
   input:not([type='checkbox']):not([type='radio']):focus,
   select:focus,
   textarea:focus {
-    @apply border-[#2EAD96] outline-none ring-2 ring-[#2EAD96]/20;
+    @apply border-[#2FB394] outline-none ring-2 ring-[#2FB394]/20;
   }
   input::placeholder,
   textarea::placeholder {
@@ -178,7 +199,7 @@
 }
 
 .module-route-content h1 {
-  color: #41414D !important;
+  color: #3F3E4D !important;
   font-size: clamp(1.5rem, 2vw, 1.9rem) !important;
   font-weight: 700 !important;
   letter-spacing: -0.025em;
@@ -186,7 +207,7 @@
 }
 
 .module-route-content h2 {
-  color: #41414D;
+  color: #3F3E4D;
   letter-spacing: -0.015em;
 }
 
@@ -194,3 +215,8 @@
   background: #F1F5F4;
   color: #537F77;
 }
+
+/* Scroll da sidebar totalmente transparente (continua a rolar com roda/toque) */
+.sidebar-scroll { scrollbar-width: none; scrollbar-color: transparent transparent; -ms-overflow-style: none; }
+.sidebar-scroll::-webkit-scrollbar { width: 0; height: 0; background: transparent; }
+.sidebar-scroll::-webkit-scrollbar-thumb { background: transparent; }

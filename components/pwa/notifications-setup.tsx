@@ -106,21 +106,21 @@ export function NotificationsSetup() {
   return (
     <div className="space-y-3">
       {/* Notification Status */}
-      <div className="bg-[#f0f2ed] border border-[#E8E8E8] rounded-lg p-4">
+      <div className="bg-[#EEF2F1] border border-[#E8E8E8] rounded-lg p-4">
         <div className="flex items-start gap-3">
           <div className="flex-shrink-0 mt-0.5">
             {isSubscribed ? (
               <Bell className="w-5 h-5 text-green-600" />
             ) : (
-              <BellOff className="w-5 h-5 text-[#6b7d3f]" />
+              <BellOff className="w-5 h-5 text-[#2FB394]" />
             )}
           </div>
 
           <div className="flex-1">
-            <h3 className="font-medium text-[#283106] mb-1">
+            <h3 className="font-medium text-[#515062] mb-1">
               {isSubscribed ? 'Notificações Ativadas' : 'Notificações Desativadas'}
             </h3>
-            <p className="text-sm text-[#6b7d3f] mb-3">
+            <p className="text-sm text-[#2FB394] mb-3">
               {isSubscribed
                 ? 'Você receberá alertas sobre mortalidade, ração e vacinação'
                 : 'Ative as notificações para receber alertas importantes'}

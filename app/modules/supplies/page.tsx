@@ -130,7 +130,7 @@ export default function SuppliesPage() {
         />
         <Link
           href="/modules/supplies"
-          className="w-full sm:w-auto flex items-center justify-center sm:justify-start gap-2 px-4 py-2 bg-[#283106] text-white rounded hover:bg-[#1a1f04] transition-colors text-sm font-semibold"
+          className="w-full sm:w-auto flex items-center justify-center sm:justify-start gap-2 px-4 py-2 bg-[#515062] text-white rounded hover:bg-[#3F3E4D] transition-colors text-sm font-semibold"
         >
           <Plus className="w-4 h-4" />
           Novo Suprimento
@@ -138,19 +138,19 @@ export default function SuppliesPage() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white border border-[#C7C2AB] p-4 rounded space-y-3 sm:space-y-0">
+      <div className="bg-white border border-[#C9D4D1] p-4 rounded space-y-3 sm:space-y-0">
         <div className="flex items-center gap-2 mb-3">
-          <Filter className="w-4 h-4 text-[#283106]" />
-          <span className="text-sm font-semibold text-[#283106]">Filtros</span>
+          <Filter className="w-4 h-4 text-[#515062]" />
+          <span className="text-sm font-semibold text-[#515062]">Filtros</span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
           {/* Status Filter */}
           <div>
-            <label className="block text-xs font-semibold text-[#283106] mb-1">Status</label>
+            <label className="block text-xs font-semibold text-[#515062] mb-1">Status</label>
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-[#C7C2AB] rounded text-sm text-[#283106] bg-white hover:border-[#777E5C] transition-colors"
+              className="w-full px-3 py-2 border border-[#C9D4D1] rounded text-sm text-[#515062] bg-white hover:border-[#7D8B89] transition-colors"
             >
               <option value="all">Todos</option>
               <option value="pending">Pendente</option>
@@ -161,11 +161,11 @@ export default function SuppliesPage() {
 
           {/* Bird Type Filter */}
           <div>
-              <label className="block text-xs font-semibold text-[#283106] mb-1">Tipo de produto</label>
+              <label className="block text-xs font-semibold text-[#515062] mb-1">Tipo de produto</label>
             <select
               value={productTypeFilter}
               onChange={(e) => setProductTypeFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-[#C7C2AB] rounded text-sm text-[#283106] bg-white hover:border-[#777E5C] transition-colors"
+              className="w-full px-3 py-2 border border-[#C9D4D1] rounded text-sm text-[#515062] bg-white hover:border-[#7D8B89] transition-colors"
             >
               <option value="all">Todos</option>
               <option value="feed">Ração</option>
@@ -177,23 +177,23 @@ export default function SuppliesPage() {
 
           {/* Start Date Filter */}
           <div>
-            <label className="block text-xs font-semibold text-[#283106] mb-1">Data Início</label>
+            <label className="block text-xs font-semibold text-[#515062] mb-1">Data Início</label>
             <input
               type="date"
               value={dateStartFilter}
               onChange={(e) => setDateStartFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-[#C7C2AB] rounded text-sm text-[#283106] bg-white"
+              className="w-full px-3 py-2 border border-[#C9D4D1] rounded text-sm text-[#515062] bg-white"
             />
           </div>
 
           {/* End Date Filter */}
           <div>
-            <label className="block text-xs font-semibold text-[#283106] mb-1">Data Fim</label>
+            <label className="block text-xs font-semibold text-[#515062] mb-1">Data Fim</label>
             <input
               type="date"
               value={dateEndFilter}
               onChange={(e) => setDateEndFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-[#C7C2AB] rounded text-sm text-[#283106] bg-white"
+              className="w-full px-3 py-2 border border-[#C9D4D1] rounded text-sm text-[#515062] bg-white"
             />
           </div>
         </div>
@@ -207,7 +207,7 @@ export default function SuppliesPage() {
               setDateStartFilter('')
               setDateEndFilter('')
             }}
-            className="text-xs text-[#777E5C] hover:text-[#283106] transition-colors underline"
+            className="text-xs text-[#7D8B89] hover:text-[#515062] transition-colors underline"
           >
             Limpar Filtros
           </button>
@@ -221,11 +221,11 @@ export default function SuppliesPage() {
         onDelete={(id) => setDeleteId(id)}
         loading={loading}
       />
-      {hasMore && <div className="flex justify-center"><button onClick={() => void fetchBatches(purchases.length, true)} disabled={loadingMore} className="rounded-lg border border-[#DDE1D2] bg-white px-5 py-2 text-sm font-semibold text-[#384126] disabled:opacity-60">{loadingMore ? 'A carregar…' : 'Carregar mais registos'}</button></div>}
+      {hasMore && <div className="flex justify-center"><button onClick={() => void fetchBatches(purchases.length, true)} disabled={loadingMore} className="rounded-lg border border-[#E2E8E6] bg-white px-5 py-2 text-sm font-semibold text-[#5F5E73] disabled:opacity-60">{loadingMore ? 'A carregar…' : 'Carregar mais registos'}</button></div>}
       
       {filteredPurchases.length === 0 && !loading && (
         <div className="text-center py-8">
-          <p className="text-[#777E5C] text-sm">Nenhum lote encontrado com os filtros selecionados</p>
+          <p className="text-[#7D8B89] text-sm">Nenhum lote encontrado com os filtros selecionados</p>
         </div>
       )}
 

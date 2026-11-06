@@ -11,28 +11,28 @@ export default function AviculturalMetrics() {
         value="-"
         percentage={0}
         status="green"
-        icon={<TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-[#283106]" />}
+        icon={<TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-[#515062]" />}
       />
       <KPICard
         title="Postura %"
         value="-"
         percentage={0}
         status="green"
-        icon={<Zap className="w-4 h-4 sm:w-5 sm:h-5 text-[#283106]" />}
+        icon={<Zap className="w-4 h-4 sm:w-5 sm:h-5 text-[#515062]" />}
       />
       <KPICard
         title="Temperatura Média"
         value="-"
         percentage={0}
         status="green"
-        icon={<Thermometer className="w-4 h-4 sm:w-5 sm:h-5 text-[#283106]" />}
+        icon={<Thermometer className="w-4 h-4 sm:w-5 sm:h-5 text-[#515062]" />}
       />
       <KPICard
         title="Custo/Ave"
         value="-"
         percentage={0}
         status="green"
-        icon={<Wallet className="w-4 h-4 sm:w-5 sm:h-5 text-[#283106]" />}
+        icon={<Wallet className="w-4 h-4 sm:w-5 sm:h-5 text-[#515062]" />}
         isCurrency
       />
     </div>

@@ -59,7 +59,7 @@ export default function CreateBatchPage() {
     <div className="space-y-4 sm:space-y-6 font-montserrat">
       <div className="flex items-center gap-2">
         <Link href="/modules/batches/list">
-          <ArrowLeft className="w-5 h-5 text-[#283106] cursor-pointer hover:text-[#777E5C]" />
+          <ArrowLeft className="w-5 h-5 text-[#515062] cursor-pointer hover:text-[#7D8B89]" />
         </Link>
         <PageHeader 
           title="Criar Novo Lote"
@@ -141,13 +141,13 @@ export default function CreateBatchPage() {
           <button
             type="submit"
             disabled={loading}
-            className="flex-1 px-4 py-2 bg-[#283106] text-white rounded hover:bg-[#1a1f04] transition-colors disabled:opacity-50 font-semibold text-sm"
+            className="flex-1 px-4 py-2 bg-[#515062] text-white rounded hover:bg-[#3F3E4D] transition-colors disabled:opacity-50 font-semibold text-sm"
           >
             {loading ? 'Criando...' : 'Criar Lote'}
           </button>
           <Link
             href="/modules/batches/list"
-            className="flex-1 px-4 py-2 border border-[#C7C2AB] text-[#283106] rounded hover:bg-[#F5F4F1] transition-colors font-semibold text-sm text-center"
+            className="flex-1 px-4 py-2 border border-[#C9D4D1] text-[#515062] rounded hover:bg-[#F9F9F9] transition-colors font-semibold text-sm text-center"
           >
             Cancelar
           </Link>

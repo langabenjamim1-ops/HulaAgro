@@ -13,15 +13,15 @@ export function MessageBubble({ role, content, timestamp }: MessageBubbleProps) 
   return (
     <div className={`flex gap-3 mb-4 ${isUser ? 'justify-end' : 'justify-start'}`}>
       {!isUser && (
-        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#D1D8BD] flex items-center justify-center">
-          <Bot className="w-4 h-4 text-[#283106]" />
+        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#D5DEDC] flex items-center justify-center">
+          <Bot className="w-4 h-4 text-[#515062]" />
         </div>
       )}
 
       <div
         className={`max-w-xs lg:max-w-md px-4 py-3 rounded-lg ${
           isUser
-            ? 'bg-[#283106] text-white rounded-br-none'
+            ? 'bg-[#515062] text-white rounded-br-none'
             : 'bg-white text-gray-900 border border-[#E8E8E8] rounded-bl-none'
         }`}
       >
@@ -41,7 +41,7 @@ export function MessageBubble({ role, content, timestamp }: MessageBubbleProps) 
                 )
               },
               a: ({ node, ...props }) => (
-                <a className="text-[#283106] underline hover:opacity-80" {...props} />
+                <a className="text-[#515062] underline hover:opacity-80" {...props} />
               ),
             }}
           >
@@ -57,7 +57,7 @@ export function MessageBubble({ role, content, timestamp }: MessageBubbleProps) 
       </div>
 
       {isUser && (
-        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#283106] flex items-center justify-center">
+        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#515062] flex items-center justify-center">
           <User className="w-4 h-4 text-white" />
         </div>
       )}

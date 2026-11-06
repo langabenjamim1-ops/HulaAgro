@@ -104,9 +104,9 @@ export default function WialonMap({
             center={[position.latitude, position.longitude]}
             radius={isSelected ? 10 : 8}
             pathOptions={{
-              color: isSelected ? '#283106' : '#ffffff',
+              color: isSelected ? '#515062' : '#ffffff',
               weight: isSelected ? 4 : 2,
-              fillColor: unit.connected ? '#65a30d' : '#dc2626',
+              fillColor: unit.connected ? '#2FB394' : '#dc2626',
               fillOpacity: 0.95,
             }}
             eventHandlers={{

@@ -91,7 +91,7 @@ export default function QuarantinePage() {
         <PageHeader title="Registros de Saúde" description="Gerenciar registros de saúde do galpão" />
         <Link
           href="/modules/health/records/create"
-          className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-[#283106] text-white rounded hover:bg-[#1a1f04] transition-colors text-sm font-semibold"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-[#515062] text-white rounded hover:bg-[#3F3E4D] transition-colors text-sm font-semibold"
         >
           <Plus className="w-4 h-4" />
           Novo Registro
@@ -105,7 +105,7 @@ export default function QuarantinePage() {
         onDelete={(id) => setDeleteId(id)}
         loading={loading}
       />
-      {hasMore && <div className="flex justify-center"><button onClick={() => void fetchRecords(records.length, true)} disabled={loadingMore} className="rounded-lg border border-[#DDE1D2] bg-white px-5 py-2 text-sm font-semibold text-[#384126] disabled:opacity-60">{loadingMore ? 'A carregar…' : 'Carregar registos anteriores'}</button></div>}
+      {hasMore && <div className="flex justify-center"><button onClick={() => void fetchRecords(records.length, true)} disabled={loadingMore} className="rounded-lg border border-[#E2E8E6] bg-white px-5 py-2 text-sm font-semibold text-[#5F5E73] disabled:opacity-60">{loadingMore ? 'A carregar…' : 'Carregar registos anteriores'}</button></div>}
 
       <ConfirmDialog
         isOpen={deleteId !== null}

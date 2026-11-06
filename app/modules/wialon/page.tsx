@@ -7,11 +7,11 @@ export default function WialonMonitoringPage() {
     <div className="min-h-screen bg-[#DFE0DC] p-4 md:p-6">
       <div className="mx-auto max-w-[1600px]">
         <div className="mb-5">
-          <Link href="/dashboard" className="mb-3 inline-flex text-xs font-semibold text-[#53602E] hover:underline">← Voltar ao dashboard</Link>
-          <h1 className="font-montserrat text-xl font-bold text-[#283106]">
+          <Link href="/dashboard" className="mb-3 inline-flex text-xs font-semibold text-[#2FB394] hover:underline">← Voltar ao dashboard</Link>
+          <h1 className="font-montserrat text-xl font-bold text-[#515062]">
             Monitorização Wialon
           </h1>
-          <p className="mt-1 text-xs text-[#777E5C]">
+          <p className="mt-1 text-xs text-[#7D8B89]">
             Dispositivos, localização e sensores da operação.
           </p>
         </div>

@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     'mobile-web-app-capable': 'yes',
     'mobile-web-app-status-bar-style': 'black-translucent',
     'mobile-web-app-title': 'HULA AGRO',
-    'theme-color': '#283106',
+    'theme-color': '#515062',
   },
 }
 

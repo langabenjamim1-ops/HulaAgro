@@ -63,9 +63,9 @@ export default function ModulesOverview() {
               onClick={() => setExpandedModule(expandedModule === module.id ? null : module.id)}
               className="w-full text-left"
             >
-              <div className="bg-white border border-[#C7C2AB] hover:border-[#283106] transition-all cursor-pointer h-full flex flex-col overflow-hidden hover:shadow-lg group">
+              <div className="bg-white border border-[#C9D4D1] hover:border-[#515062] transition-all cursor-pointer h-full flex flex-col overflow-hidden hover:shadow-lg group">
                 {/* Module Image */}
-                <div className="relative w-full h-40 sm:h-48 overflow-hidden bg-[#D1D8BD]">
+                <div className="relative w-full h-40 sm:h-48 overflow-hidden bg-[#D5DEDC]">
                   <Image
                     src={module.image}
                     alt={module.title}
@@ -78,21 +78,21 @@ export default function ModulesOverview() {
                 {/* Module Info */}
                 <div className="p-4 flex-1 flex flex-col justify-between">
                   <div>
-                    <h3 className="font-montserrat font-bold text-[#283106] text-sm sm:text-base mb-1">
+                    <h3 className="font-montserrat font-bold text-[#515062] text-sm sm:text-base mb-1">
                       {module.title}
                     </h3>
-                    <p className="text-xs text-[#777E5C] font-normal">
+                    <p className="text-xs text-[#7D8B89] font-normal">
                       {module.description}
                     </p>
                   </div>
 
                   {/* Expand Indicator */}
                   <div className="flex items-center justify-between mt-3">
-                    <span className="text-xs font-medium text-[#283106]">
+                    <span className="text-xs font-medium text-[#515062]">
                       {module.submenus.length} módulos
                     </span>
                     <ChevronDown
-                      className={`w-5 h-5 text-[#777E5C] transition-transform ${
+                      className={`w-5 h-5 text-[#7D8B89] transition-transform ${
                         expandedModule === module.id ? 'rotate-180' : ''
                       }`}
                     />
@@ -110,10 +110,10 @@ export default function ModulesOverview() {
                     href={submenu.href}
                     className="block group/submenu"
                   >
-                    <div className="bg-white border border-[#D1D8BD] hover:border-[#283106] hover:shadow-md transition-all overflow-hidden">
+                    <div className="bg-white border border-[#D5DEDC] hover:border-[#515062] hover:shadow-md transition-all overflow-hidden">
                       <div className="flex gap-3">
                         {/* Submenu Image */}
-                        <div className="relative w-24 h-24 flex-shrink-0 overflow-hidden bg-[#D1D8BD]">
+                        <div className="relative w-24 h-24 flex-shrink-0 overflow-hidden bg-[#D5DEDC]">
                           <Image
                             src={submenu.image}
                             alt={submenu.title}
@@ -125,17 +125,17 @@ export default function ModulesOverview() {
                         {/* Submenu Info */}
                         <div className="p-3 flex-1 flex flex-col justify-between min-w-0">
                           <div>
-                            <h4 className="font-montserrat font-semibold text-[#283106] text-xs sm:text-sm leading-tight group-hover/submenu:text-[#777E5C] transition-colors">
+                            <h4 className="font-montserrat font-semibold text-[#515062] text-xs sm:text-sm leading-tight group-hover/submenu:text-[#7D8B89] transition-colors">
                               {submenu.title}
                             </h4>
-                            <p className="text-xs text-[#777E5C] mt-1 line-clamp-2">
+                            <p className="text-xs text-[#7D8B89] mt-1 line-clamp-2">
                               {submenu.description}
                             </p>
                           </div>
 
                           {/* Arrow Icon */}
                           <div className="flex justify-end mt-2">
-                            <ArrowRight className="w-4 h-4 text-[#777E5C] group-hover/submenu:text-[#283106] transition-colors" />
+                            <ArrowRight className="w-4 h-4 text-[#7D8B89] group-hover/submenu:text-[#515062] transition-colors" />
                           </div>
                         </div>
                       </div>

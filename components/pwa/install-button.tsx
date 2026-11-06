@@ -78,18 +78,18 @@ export function InstallButton() {
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-start gap-3">
             <div className="flex-shrink-0 mt-1">
-              <Download className="w-5 h-5 text-[#283106]" />
+              <Download className="w-5 h-5 text-[#515062]" />
             </div>
             <div className="flex-1">
-              <h3 className="font-semibold text-sm text-[#283106] mb-1">
+              <h3 className="font-semibold text-sm text-[#515062] mb-1">
                 Instalar HULA AGRO
               </h3>
-              <p className="text-xs text-[#6b7d3f] mb-3">
+              <p className="text-xs text-[#2FB394] mb-3">
                 Use HULA AGRO como um app nativo no seu dispositivo
               </p>
               <button
                 onClick={handleInstall}
-                className="w-full px-3 py-2 bg-[#283106] text-white text-xs font-medium rounded hover:bg-[#3D4A2C] transition-colors"
+                className="w-full px-3 py-2 bg-[#515062] text-white text-xs font-medium rounded hover:bg-[#5F5E73] transition-colors"
               >
                 Instalar Agora
               </button>
@@ -97,7 +97,7 @@ export function InstallButton() {
           </div>
           <button
             onClick={() => setIsVisible(false)}
-            className="flex-shrink-0 text-[#6b7d3f] hover:text-[#283106] transition-colors"
+            className="flex-shrink-0 text-[#2FB394] hover:text-[#515062] transition-colors"
             aria-label="Fechar"
           >
             <X className="w-4 h-4" />

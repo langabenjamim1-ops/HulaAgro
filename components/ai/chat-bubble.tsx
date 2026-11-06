@@ -15,8 +15,8 @@ export function ChatBubble({ message, role }: ChatBubbleProps) {
       <div
         className={`max-w-xs md:max-w-sm lg:max-w-md px-4 py-3 rounded-lg ${
           isUser
-            ? 'bg-[#283106] text-white rounded-br-none'
-            : 'bg-white text-[#283106] border border-[#E8E8E8] rounded-bl-none'
+            ? 'bg-[#515062] text-white rounded-br-none'
+            : 'bg-white text-[#515062] border border-[#E8E8E8] rounded-bl-none'
         }`}
       >
         <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">{message}</p>

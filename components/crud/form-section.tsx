@@ -14,9 +14,9 @@ export default function FormSection({ title, children, columns = 2 }: FormSectio
   }[columns]
 
   return (
-    <div className="bg-white border border-[#C7C2AB] p-4 sm:p-6 font-montserrat">
+    <div className="bg-white border border-[#C9D4D1] p-4 sm:p-6 font-montserrat">
       {title && (
-        <h3 className="text-sm sm:text-base font-bold text-[#283106] mb-4">{title}</h3>
+        <h3 className="text-sm sm:text-base font-bold text-[#515062] mb-4">{title}</h3>
       )}
       <div className={`grid ${gridClass} gap-4 sm:gap-6`}>
         {children}
@@ -35,7 +35,7 @@ interface FormFieldProps {
 export function FormField({ label, required, error, children }: FormFieldProps) {
   return (
     <div className="flex flex-col gap-1">
-      <label className="text-xs sm:text-sm font-semibold text-[#283106]">
+      <label className="text-xs sm:text-sm font-semibold text-[#515062]">
         {label}
         {required && <span className="text-red-600 ml-1">*</span>}
       </label>
@@ -56,7 +56,7 @@ export function FormInput({ label, required, error, ...props }: FormInputProps) 
     <FormField label={label} required={required} error={error}>
       <input
         {...props}
-        className="px-3 py-2 text-xs sm:text-sm border border-[#C7C2AB] rounded bg-white text-[#283106] placeholder-[#B0A89A] focus:outline-none focus:border-[#777E5C]"
+        className="px-3 py-2 text-xs sm:text-sm border border-[#C9D4D1] rounded bg-white text-[#515062] placeholder-[#B0A89A] focus:outline-none focus:border-[#7D8B89]"
       />
     </FormField>
   )
@@ -74,7 +74,7 @@ export function FormSelect({ label, required, error, options, ...props }: FormSe
     <FormField label={label} required={required} error={error}>
       <select
         {...props}
-        className="px-3 py-2 text-xs sm:text-sm border border-[#C7C2AB] rounded bg-white text-[#283106] focus:outline-none focus:border-[#777E5C]"
+        className="px-3 py-2 text-xs sm:text-sm border border-[#C9D4D1] rounded bg-white text-[#515062] focus:outline-none focus:border-[#7D8B89]"
       >
         <option value="">Selecione uma opção</option>
         {options.map((opt) => (
@@ -98,7 +98,7 @@ export function FormTextarea({ label, required, error, ...props }: FormTextareaP
     <FormField label={label} required={required} error={error}>
       <textarea
         {...props}
-        className="px-3 py-2 text-xs sm:text-sm border border-[#C7C2AB] rounded bg-white text-[#283106] placeholder-[#B0A89A] focus:outline-none focus:border-[#777E5C] resize-none"
+        className="px-3 py-2 text-xs sm:text-sm border border-[#C9D4D1] rounded bg-white text-[#515062] placeholder-[#B0A89A] focus:outline-none focus:border-[#7D8B89] resize-none"
       />
     </FormField>
   )

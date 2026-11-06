@@ -81,7 +81,7 @@ export default function EmployeesListPage() {
         <PageHeader title="Funcionários" description="Gerenciar funcionários do galpão" />
         <Link
           href="/modules/hr/employees/create"
-          className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-[#283106] text-white rounded hover:bg-[#1a1f04] transition-colors text-sm font-semibold"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-[#515062] text-white rounded hover:bg-[#3F3E4D] transition-colors text-sm font-semibold"
         >
           <Plus className="w-4 h-4" />
           Novo Funcionário

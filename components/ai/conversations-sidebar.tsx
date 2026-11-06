@@ -59,7 +59,7 @@ export function ConversationsSidebar({ activeId, onNewChat }: ConversationsSideb
       <div className="p-4 border-b border-[#E8E8E8]">
         <button
           onClick={onNewChat}
-          className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-[#283106] text-white rounded-lg hover:bg-[#3D4A2C] transition-colors font-medium text-sm"
+          className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-[#515062] text-white rounded-lg hover:bg-[#5F5E73] transition-colors font-medium text-sm"
         >
           <Plus className="w-4 h-4" />
           Nova Conversa
@@ -79,14 +79,14 @@ export function ConversationsSidebar({ activeId, onNewChat }: ConversationsSideb
                 key={conversation.id}
                 className={`group flex items-center gap-2 px-3 py-2 rounded-lg transition-colors ${
                   activeId === conversation.id
-                    ? 'bg-[#F5F5F0] border-l-4 border-[#283106]'
-                    : 'hover:bg-[#F5F5F0]'
+                    ? 'bg-[#F9F9F9] border-l-4 border-[#515062]'
+                    : 'hover:bg-[#F9F9F9]'
                 }`}
               >
-                <MessageSquare className="w-4 h-4 text-[#283106] flex-shrink-0" />
+                <MessageSquare className="w-4 h-4 text-[#515062] flex-shrink-0" />
                 <Link
                   href={`/modules/ai-consultiva?conversation=${conversation.id}`}
-                  className="flex-1 truncate text-sm text-gray-900 hover:text-[#283106]"
+                  className="flex-1 truncate text-sm text-gray-900 hover:text-[#515062]"
                   title={conversation.title}
                 >
                   {conversation.title}

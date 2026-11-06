@@ -13,14 +13,14 @@ interface KPICardProps {
 
 export default function KPICard({ title, value, percentage, status, icon, isCurrency = false }: KPICardProps) {
   const statusColors = {
-    green: 'bg-[#DFE0DC] border-[#C7C2AB]',
-    yellow: 'bg-[#F5F4F1] border-[#D1D8BD]',
-    red: 'bg-[#F5F4F1] border-[#A67C52]'
+    green: 'bg-[#DFE0DC] border-[#C9D4D1]',
+    yellow: 'bg-[#F9F9F9] border-[#D5DEDC]',
+    red: 'bg-[#F9F9F9] border-[#A67C52]'
   }
 
   const percentageColors = {
-    green: 'text-[#283106]',
-    yellow: 'text-[#777E5C]',
+    green: 'text-[#515062]',
+    yellow: 'text-[#7D8B89]',
     red: 'text-[#A67C52]'
   }
 
@@ -39,8 +39,8 @@ export default function KPICard({ title, value, percentage, status, icon, isCurr
           <span className="text-xs font-semibold">{Math.abs(percentage)}%</span>
         </div>
       </div>
-      <h3 className="text-xs text-[#777E5C] font-montserrat font-medium mb-1">{title}</h3>
-      <p className="text-lg sm:text-xl md:text-2xl font-bold text-[#283106] font-montserrat">
+      <h3 className="text-xs text-[#7D8B89] font-montserrat font-medium mb-1">{title}</h3>
+      <p className="text-lg sm:text-xl md:text-2xl font-bold text-[#515062] font-montserrat">
         {isCurrency && value !== '-' ? 'MZN ' : ''}{value}
       </p>
     </div>

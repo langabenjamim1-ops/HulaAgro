@@ -16,10 +16,36 @@ export async function getAuthenticatedFarmContext() {
   const auth = await getSupabaseServerClient()
   const { data: { user } } = await auth.auth.getUser()
   if (!user) throw new Error('Inicie sessão para consultar os dados do aviário.')
-  const { data: profile, error } = await auth.from('profiles').select('default_farm_id,role').eq('id', user.id).maybeSingle()
-  if (error) throw new Error('Não foi possível carregar o perfil do cliente. Aplique a migração de gestão de clientes.')
-  if (!profile?.default_farm_id) throw new Error('A conta ainda não tem um aviário associado. Contacte a administração.')
-  return { userId: user.id, farmId: profile.default_farm_id as string, platformAdmin: profile.role === 'platform_admin' }
+
+  // O utilizador já foi autenticado acima. O perfil é lido com a chave de serviço (apenas no servidor)
+  // para não depender das políticas RLS de `profiles`, que se auto-referenciam e podem falhar.
+  const { client: admin } = database('')
+
+  type ProfileRow = { default_farm_id?: string | null; tenant_id?: string | null; role?: string | null }
+  let profile: ProfileRow | null = null
+  const full = await admin.from('profiles').select('default_farm_id,tenant_id,role').eq('id', user.id).maybeSingle()
+  if (full.error) {
+    // Coluna default_farm_id pode não existir se a migração 001 ainda não foi aplicada.
+    console.error('[farm-context] profiles (completo):', full.error.message)
+    const basic = await admin.from('profiles').select('tenant_id,role').eq('id', user.id).maybeSingle()
+    if (basic.error) {
+      console.error('[farm-context] profiles (básico):', basic.error.message)
+      throw new Error(`Não foi possível carregar o perfil do cliente: ${basic.error.message}`)
+    }
+    profile = basic.data as ProfileRow | null
+  } else {
+    profile = full.data as ProfileRow | null
+  }
+  if (!profile) throw new Error('Perfil não encontrado para esta conta. Contacte a administração.')
+
+  let farmId = profile.default_farm_id ?? null
+  if (!farmId && profile.tenant_id) {
+    const { data: farm, error: farmError } = await admin.from('farms').select('id').eq('tenant_id', profile.tenant_id).order('created_at', { ascending: true }).limit(1).maybeSingle()
+    if (farmError) console.error('[farm-context] farms:', farmError.message)
+    farmId = farm?.id ?? null
+  }
+  if (!farmId) throw new Error('A conta ainda não tem um aviário associado. Contacte a administração.')
+  return { userId: user.id, farmId, platformAdmin: profile.role === 'platform_admin' }
 }
 
 async function rows(table: string, columns: string, days: number, farmId: string, batchId?: string) {
