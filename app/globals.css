@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Paleta Sistema de Gestão: verde #2FB394 · ardósia #515062 · coral #EC7873 · cinza #98ABA9 · fundo #F9F9F9 */
+  /* Paleta Sistema de Gestão: laranja #E8821C · ardósia #515062 · menta #2FB394 (sucesso) · coral #EC7873 · fundo #F9F9F9 */
   --background: #F9F9F9;
   --foreground: #3F3E4D;
   --card: #FFFFFF;
@@ -15,21 +15,27 @@
   --popover: #FFFFFF;
   --popover-foreground: #3F3E4D;
   
-  /* Cores primárias - Serpentine Dark Green */
-  --primary: #2FB394;
+  /* Cor primária - laranja */
+  --primary: #E8821C;
   --primary-foreground: #FFFFFF;
   
-  /* Secundário - Ivy Green-Gray */
-  --secondary: #98ABA9;
-  --secondary-foreground: #FFFFFF;
+  /* Secundário - laranja suave */
+  --secondary: #FDF1E3;
+  --secondary-foreground: #B85F0A;
   
   /* Muted - Spring Light Sage */
   --muted: #EEF2F1;
   --muted-foreground: #7D8B89;
   
-  /* Accent - Ivy complementar */
-  --accent: #EC7873;
-  --accent-foreground: #FFFFFF;
+  /* Accent - tinta laranja (hover/seleção) */
+  --accent: #FDF1E3;
+  --accent-foreground: #B85F0A;
+
+  /* Marca (extras) */
+  --brand-ink: #B85F0A;
+  --brand-hover: #CF6F0E;
+  --brand-tint: #FDF1E3;
+  --brand-tint-strong: #FAE0C2;
   
   /* Destructivo - Warm earth tone */
   --destructive: #EC7873;
@@ -38,14 +44,14 @@
   /* Borders e inputs */
   --border: #E2E8E6;
   --input: #FFFFFF;
-  --ring: #2FB394;
+  --ring: #E8821C;
   
-  /* Charts - Earthy palette */
-  --chart-1: #2FB394;
-  --chart-2: #EC7873;
+  /* Charts - laranja + menta + pastéis do design */
+  --chart-1: #E8821C;
+  --chart-2: #25C9A0;
   --chart-3: #515062;
-  --chart-4: #98ABA9;
-  --chart-5: #C9D4D1;
+  --chart-4: #F2A7B5;
+  --chart-5: #C9B2EE;
   
   --radius: 0.75rem;
   
@@ -67,24 +73,28 @@
   --card-foreground: #F1F4F3;
   --popover: #303039;
   --popover-foreground: #F1F4F3;
-  --primary: #42BCA5;
-  --primary-foreground: #172B28;
-  --secondary: #98ABA9;
-  --secondary-foreground: #24242C;
+  --primary: #F09A3E;
+  --primary-foreground: #2B1A08;
+  --secondary: #43362A;
+  --secondary-foreground: #F6C998;
   --muted: #3B3B45;
   --muted-foreground: #B0B9B7;
-  --accent: #EC7873;
-  --accent-foreground: #FFFFFF;
+  --accent: #43362A;
+  --accent-foreground: #F6C998;
+  --brand-ink: #F6B063;
+  --brand-hover: #F5A94F;
+  --brand-tint: #3A2E22;
+  --brand-tint-strong: #4D3A26;
   --destructive: #EC7873;
   --destructive-foreground: #FFFFFF;
   --border: #4A4A55;
   --input: #303039;
-  --ring: #42BCA5;
-  --chart-1: #42BCA5;
-  --chart-2: #EC7873;
+  --ring: #F09A3E;
+  --chart-1: #F09A3E;
+  --chart-2: #42BCA5;
   --chart-3: #98ABA9;
-  --chart-4: #747483;
-  --chart-5: #D1D8D6;
+  --chart-4: #F2A7B5;
+  --chart-5: #C9B2EE;
   --sidebar: #24242C;
   --sidebar-foreground: #F1F4F3;
   --sidebar-primary: #42BCA5;
@@ -147,6 +157,10 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-tint: var(--brand-tint);
+  --color-brand-tint-strong: var(--brand-tint-strong);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -172,7 +186,7 @@
   input:not([type='checkbox']):not([type='radio']):focus,
   select:focus,
   textarea:focus {
-    @apply border-[#2FB394] outline-none ring-2 ring-[#2FB394]/20;
+    @apply border-primary outline-none ring-2 ring-primary/20;
   }
   input::placeholder,
   textarea::placeholder {
@@ -212,11 +226,37 @@
 }
 
 .module-route-content table thead {
-  background: #F1F5F4;
-  color: #537F77;
+  background: var(--brand-tint);
+  color: var(--brand-ink);
 }
 
 /* Scroll da sidebar totalmente transparente (continua a rolar com roda/toque) */
 .sidebar-scroll { scrollbar-width: none; scrollbar-color: transparent transparent; -ms-overflow-style: none; }
 .sidebar-scroll::-webkit-scrollbar { width: 0; height: 0; background: transparent; }
 .sidebar-scroll::-webkit-scrollbar-thumb { background: transparent; }
+
+/* ------------------------------------------------------------------
+   Compatibilidade: a cor da marca antiga (verde #2FB394 e tintas) estava
+   escrita à mão em ~30 ficheiros. Estas regras (fora de @layer, por isso
+   ganham às utilitárias) redirecionam-na para a paleta laranja sem editar
+   cada componente. Não afeta o sidebar, que usa outras cores.
+   Para migrar de vez: trocar por bg-primary / text-brand-ink / bg-brand-tint.
+   ------------------------------------------------------------------ */
+.bg-\[\#2FB394\] { background-color: var(--primary); }
+.hover\:bg-\[\#269B86\]:hover { background-color: var(--brand-hover); }
+.text-\[\#2FB394\],
+.text-\[\#269B86\],
+.text-\[\#2E9F8B\] { color: var(--brand-ink); }
+.border-\[\#2FB394\] { border-color: var(--primary); }
+.border-t-\[\#2FB394\] { border-top-color: var(--primary); }
+.focus\:border-\[\#2FB394\]:focus { border-color: var(--primary); }
+.focus\:ring-\[\#2FB394\]\/20:focus { --tw-ring-color: color-mix(in oklab, var(--primary) 20%, transparent); }
+.bg-\[\#E3F5F0\],
+.bg-\[\#E3F4F0\],
+.bg-\[\#E7F3F0\],
+.hover\:bg-\[\#E3F5F0\]:hover { background-color: var(--brand-tint); }
+.bg-\[\#CDEFE7\] { background-color: var(--brand-tint-strong); }
+.text-\[\#CDEFE7\] { color: var(--brand-tint-strong); }
+/* Gráficos (recharts) com cor escrita em atributo */
+[stroke="#2FB394"] { stroke: var(--primary); }
+[fill="#2FB394"] { fill: var(--primary); }

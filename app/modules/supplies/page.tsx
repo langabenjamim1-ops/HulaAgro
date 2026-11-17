@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Plus, Filter } from 'lucide-react'
+import { Plus, Filter, Boxes, Truck } from 'lucide-react'
 import CRUDTable from '@/components/crud/crud-table'
 import ConfirmDialog from '@/components/crud/confirm-dialog'
 import PageHeader from '@/components/common/page-header'
 import { CLIENT_PAGE_SIZE, getClientJson, invalidateClientData, pagedEndpoint } from '@/lib/client-data'
+// Página completa da Frota Wialon, reutilizada aqui
+import WialonPage from '@/app/modules/wialon/page'
 
 interface Purchase {
   id: string
@@ -22,6 +24,7 @@ interface Purchase {
 }
 
 export default function SuppliesPage() {
+  const [tab, setTab] = useState<'records' | 'fleet'>('records')
   const [purchases, setPurchases] = useState<Purchase[]>([])
   const [filteredPurchases, setFilteredPurchases] = useState<Purchase[]>([])
   const [loading, setLoading] = useState(true)
@@ -29,7 +32,7 @@ export default function SuppliesPage() {
   const [loadingMore, setLoadingMore] = useState(false)
   const [deleteId, setDeleteId] = useState<string | null>(null)
   const [isDeleting, setIsDeleting] = useState(false)
-  
+
   // Filters
   const [statusFilter, setStatusFilter] = useState<string>('all')
   const [dateStartFilter, setDateStartFilter] = useState<string>('')
@@ -89,13 +92,13 @@ export default function SuppliesPage() {
 
   async function handleDelete() {
     if (!deleteId) return
-    
+
     try {
       setIsDeleting(true)
       const response = await fetch(`/api/purchases/${deleteId}`, {
         method: 'DELETE'
       })
-      
+
       if (!response.ok) throw new Error('Failed to delete')
       invalidateClientData('/api/purchases')
       await fetchBatches()
@@ -121,125 +124,157 @@ export default function SuppliesPage() {
     { key: 'status', label: 'Estado' },
   ]
 
+  const tabs = [
+    { id: 'records' as const, label: 'Abastecimentos', icon: Boxes },
+    { id: 'fleet' as const, label: 'Frota Wialon', icon: Truck },
+  ]
+
   return (
     <div className="space-y-4 sm:space-y-6 font-montserrat">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
-        <PageHeader 
-          title="Suprimentos"
-          description="Controle de estoque e suprimentos"
-        />
-        <Link
-          href="/modules/supplies"
-          className="w-full sm:w-auto flex items-center justify-center sm:justify-start gap-2 px-4 py-2 bg-[#515062] text-white rounded hover:bg-[#3F3E4D] transition-colors text-sm font-semibold"
-        >
-          <Plus className="w-4 h-4" />
-          Novo Suprimento
-        </Link>
-      </div>
-
-      {/* Filters */}
-      <div className="bg-white border border-[#C9D4D1] p-4 rounded space-y-3 sm:space-y-0">
-        <div className="flex items-center gap-2 mb-3">
-          <Filter className="w-4 h-4 text-[#515062]" />
-          <span className="text-sm font-semibold text-[#515062]">Filtros</span>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-          {/* Status Filter */}
-          <div>
-            <label className="block text-xs font-semibold text-[#515062] mb-1">Status</label>
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-[#C9D4D1] rounded text-sm text-[#515062] bg-white hover:border-[#7D8B89] transition-colors"
-            >
-              <option value="all">Todos</option>
-              <option value="pending">Pendente</option>
-              <option value="delivered">Entregue</option>
-              <option value="cancelled">Cancelado</option>
-            </select>
-          </div>
-
-          {/* Bird Type Filter */}
-          <div>
-              <label className="block text-xs font-semibold text-[#515062] mb-1">Tipo de produto</label>
-            <select
-              value={productTypeFilter}
-              onChange={(e) => setProductTypeFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-[#C9D4D1] rounded text-sm text-[#515062] bg-white hover:border-[#7D8B89] transition-colors"
-            >
-              <option value="all">Todos</option>
-              <option value="feed">Ração</option>
-              <option value="medication">Medicamentos</option>
-              <option value="supplies">Abastecimentos</option>
-              <option value="equipment">Equipamentos</option>
-            </select>
-          </div>
-
-          {/* Start Date Filter */}
-          <div>
-            <label className="block text-xs font-semibold text-[#515062] mb-1">Data Início</label>
-            <input
-              type="date"
-              value={dateStartFilter}
-              onChange={(e) => setDateStartFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-[#C9D4D1] rounded text-sm text-[#515062] bg-white"
-            />
-          </div>
-
-          {/* End Date Filter */}
-          <div>
-            <label className="block text-xs font-semibold text-[#515062] mb-1">Data Fim</label>
-            <input
-              type="date"
-              value={dateEndFilter}
-              onChange={(e) => setDateEndFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-[#C9D4D1] rounded text-sm text-[#515062] bg-white"
-            />
-          </div>
-        </div>
-        
-        {/* Clear Filters Button */}
-        <div className="flex justify-end mt-3">
+      {/* Separadores */}
+      <div role="tablist" className="flex gap-1 border-b border-[#C9D4D1]">
+        {tabs.map(({ id, label, icon: Icon }) => (
           <button
-            onClick={() => {
-              setStatusFilter('all')
-              setProductTypeFilter('all')
-              setDateStartFilter('')
-              setDateEndFilter('')
-            }}
-            className="text-xs text-[#7D8B89] hover:text-[#515062] transition-colors underline"
+            key={id}
+            type="button"
+            role="tab"
+            aria-selected={tab === id}
+            onClick={() => setTab(id)}
+            className={`-mb-px flex items-center gap-2 border-b-2 px-4 py-2.5 text-sm font-semibold transition-colors ${
+              tab === id
+                ? 'border-[#2FB394] text-[#515062]'
+                : 'border-transparent text-[#7D8B89] hover:text-[#515062]'
+            }`}
           >
-            Limpar Filtros
+            <Icon className="h-4 w-4" />
+            {label}
           </button>
-        </div>
+        ))}
       </div>
 
-      <CRUDTable
-        columns={columns}
-        data={filteredPurchases}
-        onEdit={handleEdit}
-        onDelete={(id) => setDeleteId(id)}
-        loading={loading}
-      />
-      {hasMore && <div className="flex justify-center"><button onClick={() => void fetchBatches(purchases.length, true)} disabled={loadingMore} className="rounded-lg border border-[#E2E8E6] bg-white px-5 py-2 text-sm font-semibold text-[#5F5E73] disabled:opacity-60">{loadingMore ? 'A carregar…' : 'Carregar mais registos'}</button></div>}
-      
-      {filteredPurchases.length === 0 && !loading && (
-        <div className="text-center py-8">
-          <p className="text-[#7D8B89] text-sm">Nenhum lote encontrado com os filtros selecionados</p>
-        </div>
-      )}
+      {tab === 'fleet' ? (
+        <WialonPage />
+      ) : (
+        <>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+            <PageHeader
+              title="Suprimentos"
+              description="Controle de estoque e suprimentos"
+            />
+            <Link
+              href="/modules/supplies"
+              className="w-full sm:w-auto flex items-center justify-center sm:justify-start gap-2 px-4 py-2 bg-[#515062] text-white rounded hover:bg-[#3F3E4D] transition-colors text-sm font-semibold"
+            >
+              <Plus className="w-4 h-4" />
+              Novo Suprimento
+            </Link>
+          </div>
 
-      <ConfirmDialog
-        isOpen={deleteId !== null}
-        title="Deletar Lote"
-        message="Tem certeza que deseja deletar este lote? Esta ação não pode ser desfeita."
-        confirmText="Deletar"
-        cancelText="Cancelar"
-        isDangerous
-        isLoading={isDeleting}
-        onConfirm={handleDelete}
-        onCancel={() => setDeleteId(null)}
-      />
+          {/* Filters */}
+          <div className="bg-white border border-[#C9D4D1] p-4 rounded space-y-3 sm:space-y-0">
+            <div className="flex items-center gap-2 mb-3">
+              <Filter className="w-4 h-4 text-[#515062]" />
+              <span className="text-sm font-semibold text-[#515062]">Filtros</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+              {/* Status Filter */}
+              <div>
+                <label className="block text-xs font-semibold text-[#515062] mb-1">Status</label>
+                <select
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                  className="w-full px-3 py-2 border border-[#C9D4D1] rounded text-sm text-[#515062] bg-white hover:border-[#7D8B89] transition-colors"
+                >
+                  <option value="all">Todos</option>
+                  <option value="pending">Pendente</option>
+                  <option value="delivered">Entregue</option>
+                  <option value="cancelled">Cancelado</option>
+                </select>
+              </div>
+
+              {/* Bird Type Filter */}
+              <div>
+                  <label className="block text-xs font-semibold text-[#515062] mb-1">Tipo de produto</label>
+                <select
+                  value={productTypeFilter}
+                  onChange={(e) => setProductTypeFilter(e.target.value)}
+                  className="w-full px-3 py-2 border border-[#C9D4D1] rounded text-sm text-[#515062] bg-white hover:border-[#7D8B89] transition-colors"
+                >
+                  <option value="all">Todos</option>
+                  <option value="feed">Ração</option>
+                  <option value="medication">Medicamentos</option>
+                  <option value="supplies">Abastecimentos</option>
+                  <option value="equipment">Equipamentos</option>
+                </select>
+              </div>
+
+              {/* Start Date Filter */}
+              <div>
+                <label className="block text-xs font-semibold text-[#515062] mb-1">Data Início</label>
+                <input
+                  type="date"
+                  value={dateStartFilter}
+                  onChange={(e) => setDateStartFilter(e.target.value)}
+                  className="w-full px-3 py-2 border border-[#C9D4D1] rounded text-sm text-[#515062] bg-white"
+                />
+              </div>
+
+              {/* End Date Filter */}
+              <div>
+                <label className="block text-xs font-semibold text-[#515062] mb-1">Data Fim</label>
+                <input
+                  type="date"
+                  value={dateEndFilter}
+                  onChange={(e) => setDateEndFilter(e.target.value)}
+                  className="w-full px-3 py-2 border border-[#C9D4D1] rounded text-sm text-[#515062] bg-white"
+                />
+              </div>
+            </div>
+
+            {/* Clear Filters Button */}
+            <div className="flex justify-end mt-3">
+              <button
+                onClick={() => {
+                  setStatusFilter('all')
+                  setProductTypeFilter('all')
+                  setDateStartFilter('')
+                  setDateEndFilter('')
+                }}
+                className="text-xs text-[#7D8B89] hover:text-[#515062] transition-colors underline"
+              >
+                Limpar Filtros
+              </button>
+            </div>
+          </div>
+
+          <CRUDTable
+            columns={columns}
+            data={filteredPurchases}
+            onEdit={handleEdit}
+            onDelete={(id) => setDeleteId(id)}
+            loading={loading}
+          />
+          {hasMore && <div className="flex justify-center"><button onClick={() => void fetchBatches(purchases.length, true)} disabled={loadingMore} className="rounded-lg border border-[#E2E8E6] bg-white px-5 py-2 text-sm font-semibold text-[#5F5E73] disabled:opacity-60">{loadingMore ? 'A carregar…' : 'Carregar mais registos'}</button></div>}
+
+          {filteredPurchases.length === 0 && !loading && (
+            <div className="text-center py-8">
+              <p className="text-[#7D8B89] text-sm">Nenhum lote encontrado com os filtros selecionados</p>
+            </div>
+          )}
+
+          <ConfirmDialog
+            isOpen={deleteId !== null}
+            title="Deletar Lote"
+            message="Tem certeza que deseja deletar este lote? Esta ação não pode ser desfeita."
+            confirmText="Deletar"
+            cancelText="Cancelar"
+            isDangerous
+            isLoading={isDeleting}
+            onConfirm={handleDelete}
+            onCancel={() => setDeleteId(null)}
+          />
+        </>
+      )}
     </div>
   )
 }

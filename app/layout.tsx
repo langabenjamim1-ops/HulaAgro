@@ -1,5 +1,5 @@
 import React from "react"
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Montserrat, JetBrains_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { AviculturaChatbot } from '@/components/ai/avicultura-chatbot'
@@ -26,34 +26,24 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
   icons: {
     icon: [
-      {
-        url: '/icons/icon-192.png',
-        sizes: '192x192',
-        type: 'image/png',
-      },
-      {
-        url: '/icons/icon-512.png',
-        sizes: '512x512',
-        type: 'image/png',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
+      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
     ],
     apple: [
-      {
-        url: '/icons/icon-192.png',
-        sizes: '192x192',
-      },
+      { url: '/icons/icon-192.png', sizes: '192x192' },
     ],
   },
   other: {
     'mobile-web-app-capable': 'yes',
-    'mobile-web-app-status-bar-style': 'black-translucent',
-    'mobile-web-app-title': 'HULA AGRO',
-    'theme-color': '#515062',
   },
+}
+
+export const viewport: Viewport = {
+  themeColor: '#515062',
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
 }
 
 export default function RootLayout({

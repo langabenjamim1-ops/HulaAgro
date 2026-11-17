@@ -17,6 +17,8 @@ function rowsOrEmpty<T>(name: string, result: SummaryResult<T>): T[] {
   return result.data ?? []
 }
 
+const emptySummary = { batches: [], production: [], daily: [], costs: [], nutrition: [], alerts: [], lastDay: [] }
+
 export async function GET(request: NextRequest) {
   try {
     const supabase = createClient(
@@ -26,13 +28,28 @@ export async function GET(request: NextRequest) {
     const rawFrom = request.nextUrl.searchParams.get('from')
     const from = rawFrom && /^\d{4}-\d{2}-\d{2}$/.test(rawFrom) ? rawFrom : new Date(Date.now() - 6 * 86400000).toISOString().slice(0, 10)
 
-    const [batches, production, daily, costs, nutrition] = await Promise.all([
-      supabase.from('batches').select('status,birds_count'),
+    const [batches, production, daily, costs, nutrition, alerts, latest] = await Promise.all([
+      supabase.from('batches').select('status,birds_count,bird_type'),
       supabase.from('production_records').select('record_date,eggs_produced,mortality_count').gte('record_date', from).order('record_date', { ascending: false }).limit(1000),
       supabase.from('daily_management_records').select('record_date,mortality_count').gte('record_date', from).order('record_date', { ascending: false }).limit(1000),
       supabase.from('cost_records').select('record_date,amount').gte('record_date', from).order('record_date', { ascending: false }).limit(1000),
       supabase.from('nutrition_records').select('record_date,consumption_kg').gte('record_date', from).order('record_date', { ascending: false }).limit(1000),
+      supabase.from('alerts').select('id,alert_type,alert_title,alert_message,status,created_at').eq('status', 'active').order('created_at', { ascending: false }).limit(30),
+      supabase.from('production_records').select('record_date').order('record_date', { ascending: false }).limit(1),
     ])
+
+    // Último dia com registos de produção. Só é preciso ir buscá-lo quando
+    // fica fora da janela já carregada (ex.: ninguém registou há mais de 7 dias).
+    let lastDay: unknown[] = []
+    const latestDate = rowsOrEmpty('último registo', latest as SummaryResult<{ record_date: string }>)[0]?.record_date
+    if (latestDate && String(latestDate) < from) {
+      const lastDayResult = await supabase
+        .from('production_records')
+        .select('record_date,eggs_produced,mortality_count')
+        .eq('record_date', latestDate)
+        .limit(200)
+      lastDay = rowsOrEmpty('último dia de produção', lastDayResult)
+    }
 
     return NextResponse.json({
       batches: rowsOrEmpty('lotes', batches),
@@ -40,11 +57,12 @@ export async function GET(request: NextRequest) {
       daily: rowsOrEmpty('gestão diária', daily),
       costs: rowsOrEmpty('custos', costs),
       nutrition: rowsOrEmpty('nutrição', nutrition),
+      alerts: rowsOrEmpty('alertas', alerts),
+      lastDay,
     })
   } catch (error) {
     console.error('GET /api/dashboard/summary failed:', error)
-    // Keep the dashboard usable if the database client or its configuration
-    // is temporarily unavailable. Individual query failures are handled above.
-    return NextResponse.json({ batches: [], production: [], daily: [], costs: [], nutrition: [] })
+    // Mantém o painel utilizável se a base de dados estiver temporariamente indisponível.
+    return NextResponse.json(emptySummary)
   }
 }

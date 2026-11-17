@@ -19,8 +19,7 @@ export default function CreateBatchPage() {
     facility_location: '',
     start_date: new Date().toISOString().split('T')[0],
     status: 'active',
-    notes: '',
-    farm_id: '00000000-0000-0000-0000-000000000000' // Default farm ID
+    notes: ''
   })
 
   async function handleSubmit(e: React.FormEvent) {
@@ -44,12 +43,15 @@ export default function CreateBatchPage() {
         })
       })
 
-      if (!response.ok) throw new Error('Failed to create batch')
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}))
+        throw new Error(data.error || 'Failed to create batch')
+      }
       
       router.push('/modules/batches/list')
     } catch (err) {
       console.error('[v0] Error creating batch:', err)
-      setError('Erro ao criar lote. Tente novamente.')
+      setError(err instanceof Error ? `Erro ao criar lote: ${err.message}` : 'Erro ao criar lote. Tente novamente.')
     } finally {
       setLoading(false)
     }

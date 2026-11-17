@@ -19,13 +19,13 @@ export function ModuleShell({ children }: { children: ReactNode }) {
   const pathParts = pathname.split('/').filter(Boolean).slice(1)
   const breadcrumbs = pathParts.map((part) => routeLabels[part] || part.replaceAll('-', ' ').replace(/\b\w/g, (letter) => letter.toUpperCase()))
 
-  return <div className="fixed inset-0 flex min-h-0 bg-[#F9F9F9] font-montserrat text-[#515062]">
-    <div className="hidden h-full lg:block"><Sidebar /></div>
-    {mobileOpen && <div className="fixed inset-0 z-50 flex lg:hidden"><button aria-label="Fechar navegação" className="absolute inset-0 bg-black/40" onClick={() => setMobileOpen(false)} /><div className="relative h-full"><button onClick={() => setMobileOpen(false)} aria-label="Fechar menu" className="absolute right-2 top-2 z-10 rounded bg-[#5F5E73] p-2 text-white"><X className="h-4 w-4" /></button><Sidebar /></div></div>}
+  return <div className="fixed inset-0 flex min-h-0 bg-[#F9F9F9] font-montserrat text-[#3F3E4D]">
+    <div className="hidden h-full lg:block"><Sidebar collapsible /></div>
+    {mobileOpen && <div className="fixed inset-0 z-50 flex lg:hidden"><button aria-label="Fechar navegação" className="absolute inset-0 bg-black/40" onClick={() => setMobileOpen(false)} /><div className="relative h-full"><button onClick={() => setMobileOpen(false)} aria-label="Fechar menu" className="absolute right-2 top-4 z-10 rounded bg-white/10 p-2 text-white"><X className="h-4 w-4" /></button><Sidebar collapsible={false} onNavigate={() => setMobileOpen(false)} /></div></div>}
     <div className="flex min-w-0 flex-1 flex-col">
-      <header className="sticky top-0 z-20 flex h-16 shrink-0 items-center justify-between border-b border-[#E2E8E6] bg-white/95 px-4 shadow-sm backdrop-blur sm:px-6 lg:px-8">
-        <div className="flex min-w-0 items-center gap-3"><button className="rounded-lg p-2 hover:bg-[#F9F9F9] lg:hidden" aria-label="Abrir navegação" onClick={() => setMobileOpen(true)}><Menu className="h-5 w-5" /></button><div className="flex min-w-0 items-center gap-2 text-sm"><span className="shrink-0 font-bold tracking-tight">HULA Agro</span><ChevronRight className="h-3.5 w-3.5 shrink-0 text-[#7D8B89]" /><span className="truncate text-[#7D8B89]">{breadcrumbs.join(' / ') || 'Gestão integrada'}</span></div></div>
-        <div className="hidden items-center gap-3 sm:flex"><span className="text-xs text-[#7D8B89]">{new Intl.DateTimeFormat('pt-MZ', { weekday: 'short', day: '2-digit', month: 'short' }).format(new Date())}</span><span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#E2E8E6] text-sm font-bold text-[#2FB394]">H</span></div>
+      <header className="sticky top-0 z-20 flex h-16 shrink-0 items-center justify-between border-b border-[#EFEFEF] bg-white/95 px-4 shadow-[0_2px_14px_rgba(65,65,77,0.05)] backdrop-blur sm:px-6 lg:px-8">
+        <div className="flex min-w-0 items-center gap-3"><button className="rounded-lg p-2 hover:bg-brand-tint lg:hidden" aria-label="Abrir navegação" onClick={() => setMobileOpen(true)}><Menu className="h-5 w-5" /></button><div className="flex min-w-0 items-center gap-2 text-sm"><span className="shrink-0 font-bold tracking-tight">HULA Agro</span><ChevronRight className="h-3.5 w-3.5 shrink-0 text-[#98ABA9]" /><span className="truncate text-brand-ink">{breadcrumbs.join(' / ') || 'Gestão integrada'}</span></div></div>
+        <div className="hidden items-center gap-3 sm:flex"><span className="text-xs text-[#7D8B89]">{new Intl.DateTimeFormat('pt-MZ', { weekday: 'short', day: '2-digit', month: 'short' }).format(new Date())}</span><span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-tint-strong text-sm font-bold text-brand-ink">H</span></div>
       </header>
       <main className="min-h-0 flex-1 overflow-y-auto px-4 py-6 sm:px-6 lg:px-8 lg:py-8"><div className="mx-auto w-full max-w-[1680px]"><div className="module-route-content min-w-0">{children}</div><ModuleInsights /></div></main>
     </div>
