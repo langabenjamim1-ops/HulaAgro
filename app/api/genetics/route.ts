@@ -1,59 +1,70 @@
 export const dynamic = 'force-dynamic'
 
-import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
-import { getApiPage } from '@/lib/api-pagination'
+import { getAuthenticatedFarmContext } from '@/lib/ai/farm-data'
+import { cleanText, failure, getAdmin } from '@/lib/batches/server'
+import { GENETIC_BIRD_TYPES, geneticsError, slugCode } from '@/lib/genetics/server'
 
-function getSupabase() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-  )
-}
-
+// Lista as genéticas da quinta. Por defeito só as ativas; ?all=1 inclui as desativadas.
 export async function GET(request: NextRequest) {
   try {
-    const batchId = request.nextUrl.searchParams.get('batch_id')
-    const page = getApiPage(request)
-    const supabase = getSupabase()
-    
-    let query = supabase.from('genetic_records').select('*')
-    
-    if (batchId) {
-      query = query.eq('batch_id', batchId)
-    }
-    
-    query = query.order('created_at', { ascending: false })
-    if (page) query = query.range(page.offset, page.offset + page.limit - 1)
+    const { farmId } = await getAuthenticatedFarmContext()
+    const all = request.nextUrl.searchParams.get('all') === '1'
+    const admin = getAdmin()
+
+    let query = admin.from('genetics').select('*').eq('farm_id', farmId).order('category', { ascending: true }).order('genetic_name', { ascending: true })
+    if (!all) query = query.eq('is_active', true)
+
     const { data, error } = await query
-    
     if (error) {
-      console.error('[v0] GET /api/genetics error:', error)
-      return NextResponse.json([], { status: 200 })
+      console.error('[genetics] GET:', error)
+      return NextResponse.json({ error: geneticsError(error) }, { status: 500 })
     }
-    
-    return NextResponse.json(data || [], { status: 200 })
+
+    // Quantos lotes usam cada genética (o lote guarda o nome da linhagem).
+    const { data: used } = await admin.from('batches').select('genetics').eq('farm_id', farmId)
+    const counts = new Map<string, number>()
+    for (const row of used || []) {
+      const key = String(row.genetics || '').trim().toLowerCase()
+      if (key) counts.set(key, (counts.get(key) || 0) + 1)
+    }
+
+    return NextResponse.json((data || []).map((item) => ({ ...item, batches_count: counts.get(String(item.genetic_name).toLowerCase()) || 0 })))
   } catch (error) {
-    console.error('[v0] GET /api/genetics error:', error)
-    return NextResponse.json([], { status: 200 })
+    return failure(error, 'Falha ao carregar genéticas')
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
+    const { farmId } = await getAuthenticatedFarmContext()
     const body = await request.json()
-    
-    const supabase = getSupabase()
-    const { data, error } = await supabase
-      .from('genetic_records')
-      .insert([body])
-      .select()
-    
-    if (error) throw error
-    
-    return NextResponse.json(data[0], { status: 201 })
+
+    const name = cleanText(body.genetic_name)
+    const birdType = cleanText(body.bird_type)
+    if (!name) return NextResponse.json({ error: 'Indique o nome da genética.' }, { status: 400 })
+    if (birdType && !(GENETIC_BIRD_TYPES as readonly string[]).includes(birdType)) {
+      return NextResponse.json({ error: 'Tipo de ave inválido.' }, { status: 400 })
+    }
+
+    const record = {
+      farm_id: farmId,
+      genetic_name: name,
+      genetic_code: cleanText(body.genetic_code) || slugCode(name),
+      bird_type: birdType,
+      category: cleanText(body.category),
+      origin: cleanText(body.origin),
+      characteristics: cleanText(body.characteristics),
+      is_active: true,
+    }
+
+    const { data, error } = await getAdmin().from('genetics').insert([record]).select().single()
+    if (error) {
+      console.error('[genetics] POST:', error)
+      return NextResponse.json({ error: geneticsError(error) }, { status: error.code === '23505' ? 409 : 400 })
+    }
+    return NextResponse.json(data, { status: 201 })
   } catch (error) {
-    console.error('[v0] POST /api/genetics error:', error)
-    return NextResponse.json({ error: 'Failed to create genetic record' }, { status: 500 })
+    return failure(error, 'Falha ao criar genética')
   }
 }

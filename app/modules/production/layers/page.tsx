@@ -1,5 +1,5 @@
-import { LiveRecordsPage } from '@/components/modules/live-records-page'
+import { ProductionEntryPage } from '@/components/production/production-entry-page'
 
 export default function LayersPage() {
-  return <LiveRecordsPage title="Produção de poedeiras" description="Consulta os registos de produção associados às poedeiras." endpoint="/api/production?cohort=layers" columns={[{ key: 'record_date', label: 'Data', kind: 'date' }, { key: 'batch_id', label: 'Lote' }, { key: 'eggs_produced', label: 'Ovos', kind: 'number' }, { key: 'laying_rate', label: 'Taxa de postura', kind: 'number', unit: '%' }, { key: 'mortality_count', label: 'Mortalidade', kind: 'number', unit: 'aves' }, { key: 'notes', label: 'Observações' }]} emptyMessage="Ainda não existem registos de produção de poedeiras." />
+  return <ProductionEntryPage birdTypes={['layers', 'breeders']} title="Produção de poedeiras" description="Registos diários de postura de todos os lotes de poedeiras." endpoint="/api/production?cohort=layers&kind=daily" columns={[{ key: 'record_date', label: 'Data', kind: 'date' }, { key: 'batch_id', label: 'Lote' }, { key: 'eggs_produced', label: 'Ovos', kind: 'number' }, { key: 'eggs_broken', label: 'Ovos partidos', kind: 'number' }, { key: 'feed_consumption', label: 'Ração', kind: 'number', unit: 'kg' }, { key: 'water_consumption', label: 'Água', kind: 'number', unit: 'L' }, { key: 'mortality_count', label: 'Mortes', kind: 'number', unit: 'aves' }, { key: 'notes', label: 'Observações' }]} emptyMessage="Ainda não existem registos de postura." />
 }

@@ -1,5 +1,5 @@
-import { LiveRecordsPage } from '@/components/modules/live-records-page'
+import { ProductionEntryPage } from '@/components/production/production-entry-page'
 
 export default function BroilersPage() {
-  return <LiveRecordsPage title="Produção de frangos de corte" description="Consulta os registos de peso e consumo associados aos frangos de corte." endpoint="/api/production?cohort=broilers" columns={[{ key: 'record_date', label: 'Data', kind: 'date' }, { key: 'batch_id', label: 'Lote' }, { key: 'average_weight', label: 'Peso médio', kind: 'number', unit: 'g' }, { key: 'feed_consumption', label: 'Consumo de ração', kind: 'number', unit: 'kg' }, { key: 'notes', label: 'Observações' }]} emptyMessage="Ainda não existem registos de produção de frangos de corte." />
+  return <ProductionEntryPage birdTypes={['broilers']} title="Produção de frangos de corte" description="Registos de peso e consumo de todos os lotes de frangos de corte." endpoint="/api/production?cohort=broilers" columns={[{ key: 'record_date', label: 'Data', kind: 'date' }, { key: 'batch_id', label: 'Lote' }, { key: 'average_weight', label: 'Peso médio', kind: 'number', unit: 'g' }, { key: 'sample_size', label: 'Aves pesadas', kind: 'number' }, { key: 'feed_consumption', label: 'Ração', kind: 'number', unit: 'kg' }, { key: 'water_consumption', label: 'Água', kind: 'number', unit: 'L' }, { key: 'mortality_count', label: 'Mortes', kind: 'number', unit: 'aves' }, { key: 'notes', label: 'Observações' }]} emptyMessage="Ainda não existem registos de frangos de corte." />
 }

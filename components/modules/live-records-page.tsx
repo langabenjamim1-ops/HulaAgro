@@ -6,7 +6,7 @@ import { CLIENT_PAGE_SIZE, getClientJson, invalidateClientData, pagedEndpoint } 
 
 export type LiveColumn = { key: string; label: string; unit?: string; kind?: 'date' | 'currency' | 'number' }
 
-export function LiveRecordsPage({ title, description, endpoint, columns, emptyMessage = 'Ainda não existem registos reais nesta área.' }: { title: string; description: string; endpoint: string; columns: LiveColumn[]; emptyMessage?: string }) {
+export function LiveRecordsPage({ title, description, endpoint, columns, emptyMessage = 'Ainda não existem registos reais nesta área.', valueLabels }: { title: string; description: string; endpoint: string; columns: LiveColumn[]; emptyMessage?: string; valueLabels?: Record<string, Record<string, string>> }) {
   const [rows, setRows] = useState<Record<string, unknown>[]>([])
   const [loading, setLoading] = useState(true)
   const [loadingMore, setLoadingMore] = useState(false)
@@ -31,6 +31,8 @@ export function LiveRecordsPage({ title, description, endpoint, columns, emptyMe
   function format(row: Record<string, unknown>, column: LiveColumn) {
     const value = row[column.key]
     if (value == null || value === '') return '—'
+    const labels = valueLabels?.[column.key]
+    if (labels) return labels[String(value)] ?? String(value)
     if (column.kind === 'date') {
       const date = new Date(String(value))
       return Number.isNaN(date.getTime()) ? String(value) : date.toLocaleDateString('pt-MZ')

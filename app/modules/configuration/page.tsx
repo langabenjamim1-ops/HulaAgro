@@ -1,8 +1,9 @@
-import { Settings2, Dna, SlidersHorizontal, Wheat, Bird } from 'lucide-react'
+import { Settings2, Dna, SlidersHorizontal, Wheat, Bird, Scale } from 'lucide-react'
 import { ModuleLanding, type ModuleLandingItem } from '@/components/modules/module-landing'
 
 const items: ModuleLandingItem[] = [
   { title: 'Genéticas', description: 'Mantenha as linhagens disponíveis para os lotes.', href: '/modules/configuration/genetics', icon: <Dna className="h-5 w-5" /> },
+  { title: 'Padrões das linhagens', description: 'Peso e postura alvo por idade, do manual do fabricante.', href: '/modules/configuration/genetics-standards', icon: <Scale className="h-5 w-5" /> },
   { title: 'Tipos de produção', description: 'Configure categorias de produção da exploração.', href: '/modules/configuration/types', icon: <Bird className="h-5 w-5" /> },
   { title: 'Parâmetros técnicos', description: 'Consulte e ajuste parâmetros zootécnicos.', href: '/modules/configuration/parameters', icon: <SlidersHorizontal className="h-5 w-5" /> },
   { title: 'Tipos de ração', description: 'Organize as rações e as fases de utilização.', href: '/modules/configuration/feed', icon: <Wheat className="h-5 w-5" /> },
